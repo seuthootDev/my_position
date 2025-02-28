@@ -35,7 +35,7 @@ const FlowersAndSaintsUI = () => {
   const handleSalarySubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const response = await fetch("http://localhost:8000/run-api", {
+      const response = await fetch("https://my-position.vercel.app/api/run-api", {  // Vercel 배포 URL로 변경
         method: "POST",
         headers: {
           "Content-Type": "application/json",
