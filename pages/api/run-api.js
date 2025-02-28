@@ -140,31 +140,8 @@ export default async function handler(req, res) {
       const unit = df.find(d => d.연령대 === age && d.소득 === lst[i]).백분위;
       sum += unit;
     }
-    const position = sum > 50 ? "상위" : "하위"
-    const percentage = sum > 50 ? parseFloat((100 - sum + 백분위값).toFixed(1)) : parseFloat(sum.toFixed(1));
-    if (position === "상위" && percentage < 5) {
-      income = "1000만원 이상";
-    } else if (position === "상위" && percentage < 20) {
-      income = "800～1000만원 미만";
-    } else if (position === "상위" && percentage < 35) {
-      income = "650～800만원 미만";
-    } else if (position === "상위" && percentage < 50) {
-      income = "550～650만원 미만";
-    } else if (position === "상위" && percentage < 65) {
-      income = "450～550만원 미만";
-    } else if (position === "상위" && percentage < 75) {
-      income = "350～450만원 미만";
-    } else if (position === "상위" && percentage < 90) {
-      income = "250～350만원 미만";
-    } else if (position === "하위" && percentage < 51) {
-      income = "150～250만원 미만";
-    } else if (position === "하위" && percentage < 35) {
-      income = "85～150만원 미만";
-    } else if (position === "하위" && percentage < 20) {
-      income = "85만원 미만";
-    } 
 
-    
+    const message = getIncomeMessage(income);
 
     return res.status(200).json({
       message,
@@ -173,8 +150,8 @@ export default async function handler(req, res) {
         percentile: 백분위값,
         mean: parseFloat(mean.toFixed(1)),
         average: parseFloat(avg.toFixed(1)),
-        position: position,
-        percentage: percentage
+        position: sum > 50 ? "상위" : "하위",
+        percentage: sum > 50 ? parseFloat((100 - sum + 백분위값).toFixed(1)) : parseFloat(sum.toFixed(1))
       }
     });
 
