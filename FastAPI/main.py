@@ -171,21 +171,18 @@ def api_run(input: Data):
         # else:
         #     print("하위",sum ,"%")
         print(sum)
-        print(get_income_message(income))
-        
         # 응답 메시지 구성  여기 상위 바꿔야함
-        message = f"{age} 기준 상위 {sum:.1f}%입니다.\n{get_income_message(income)}"
-        
+        message = get_income_message(income)
         # JSON 형식으로 응답 반환
         return {
             "message": message,
             "status": "success",
             "data": {
                 "percentile": 백분위값,
-                "mean": mean,
-                "average": avg,
+                "mean": round(float(mean), 1),
+                "average": round(float(avg), 1),
                 "position": "상위" if sum > 50 else "하위",
-                "percentage": 100 - sum if sum > 50 else sum
+                "percentage": round(100 - float(sum), 1) if sum > 50 else round(float(sum), 1)
             }
         }
     else:
